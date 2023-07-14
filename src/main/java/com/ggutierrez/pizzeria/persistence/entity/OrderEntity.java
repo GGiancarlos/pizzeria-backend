@@ -41,6 +41,7 @@ public class OrderEntity {
     private CustomerEntity customer;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)  // nombre definido en la otra entidad
+    @OrderBy("price ASC")  // ordenar los items de una orden
     private List<OrderItemEntity> items;
 
 }
