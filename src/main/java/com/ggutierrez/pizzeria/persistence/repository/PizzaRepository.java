@@ -1,7 +1,11 @@
 package com.ggutierrez.pizzeria.persistence.repository;
 
 import com.ggutierrez.pizzeria.persistence.entity.PizzaEntity;
+import com.ggutierrez.pizzeria.service.dto.UpdatePizzaPriceDto;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,4 +17,17 @@ public interface PizzaRepository extends ListCrudRepository<PizzaEntity, Integer
     List<PizzaEntity> findAllByAvailableTrueAndDescriptionNotContainingIgnoreCase(String description);
     List<PizzaEntity> findTop3ByAvailableTrueAndPriceLessThanEqualOrderByPriceAsc(double price);
     int countByVeganTrue();
+
+//    @Query(value = "UPDATE pizza " +
+//            "SET price = :newPrice " +
+//            "WHERE id_pizza = :idPizza", nativeQuery = true)
+//    @Modifying
+//    void updatePizzaPrice(@Param("idPizza") int idPizza, @Param("newPrice") double newPrice);
+
+    // using SpEL - Spring Expression Language
+    @Query(value = "UPDATE pizza " +
+            "SET price = :#{#pizza.price} " +
+            "WHERE id_pizza = :#{#pizza.idPizza}", nativeQuery = true)
+    @Modifying
+    void updatePizzaPrice(@Param("pizza")UpdatePizzaPriceDto pizzaPriceDto);
 }

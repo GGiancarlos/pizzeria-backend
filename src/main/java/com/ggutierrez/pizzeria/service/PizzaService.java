@@ -3,12 +3,14 @@ package com.ggutierrez.pizzeria.service;
 import com.ggutierrez.pizzeria.persistence.entity.PizzaEntity;
 import com.ggutierrez.pizzeria.persistence.repository.PizzaPagSortRepository;
 import com.ggutierrez.pizzeria.persistence.repository.PizzaRepository;
+import com.ggutierrez.pizzeria.service.dto.UpdatePizzaPriceDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -83,6 +85,16 @@ public class PizzaService {
 
     public PizzaEntity save(PizzaEntity pizza) {
         return this.pizzaRepository.save(pizza);
+    }
+
+//    @Transactional
+//    public void updatePizzaPrice(int idPizza, double newPrice) {
+//        this.pizzaRepository.updatePizzaPrice(idPizza, newPrice);
+//    }
+
+    @Transactional
+    public void updatePizzaPrice(UpdatePizzaPriceDto pizzaPriceDto) {
+        this.pizzaRepository.updatePizzaPrice(pizzaPriceDto);
     }
 
     public void delete(int id) {
