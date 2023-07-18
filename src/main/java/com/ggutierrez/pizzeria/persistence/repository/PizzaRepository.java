@@ -29,5 +29,5 @@ public interface PizzaRepository extends ListCrudRepository<PizzaEntity, Integer
             "SET price = :#{#pizza.price} " +
             "WHERE id_pizza = :#{#pizza.idPizza}", nativeQuery = true)
     @Modifying
-    void updatePizzaPrice(@Param("pizza")UpdatePizzaPriceDto pizzaPriceDto);
+    void updatePizzaPrice(@Param("pizza") UpdatePizzaPriceDto pizzaPriceDto);
 }
