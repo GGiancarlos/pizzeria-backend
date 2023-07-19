@@ -22,6 +22,7 @@ public class PizzaController {
     }
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<PizzaEntity>> getAll() {
         return ResponseEntity.ok(this.pizzaService.getAll());
     }
