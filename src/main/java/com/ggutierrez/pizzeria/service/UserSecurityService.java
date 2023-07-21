@@ -27,6 +27,8 @@ public class UserSecurityService implements UserDetailsService {
         return User.builder()
                 .username(userEntity.getUsername())
                 .password(userEntity.getPassword())
+                .accountLocked(userEntity.getLocked())
+                .disabled(userEntity.getDisabled())
                 .roles("ADMIN")
                 .build();
     }
