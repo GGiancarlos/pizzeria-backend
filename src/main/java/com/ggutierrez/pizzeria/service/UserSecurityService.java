@@ -1,6 +1,7 @@
 package com.ggutierrez.pizzeria.service;
 
 import com.ggutierrez.pizzeria.persistence.entity.UserEntity;
+import com.ggutierrez.pizzeria.persistence.entity.UserRoleEntity;
 import com.ggutierrez.pizzeria.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -24,12 +25,15 @@ public class UserSecurityService implements UserDetailsService {
         UserEntity userEntity = this.userRepository.findById(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username " + username + " not found"));
 
+
+        String[] roles = userEntity.getRoles().stream().map(UserRoleEntity::getRole).toArray(String[]::new);
+
         return User.builder()
                 .username(userEntity.getUsername())
                 .password(userEntity.getPassword())
                 .accountLocked(userEntity.getLocked())
                 .disabled(userEntity.getDisabled())
-                .roles("ADMIN")
+                .roles(roles)
                 .build();
     }
 }
